@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ProfileSchema = new Schema ({
+const ProfileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId, // Associate by id
     ref: 'users' // From users collection
@@ -52,7 +52,7 @@ const ProfileSchema = new Schema ({
         required: true
       },
       to: {
-        type: Date,
+        type: Date
       },
       current: {
         type: Boolean,
@@ -82,7 +82,7 @@ const ProfileSchema = new Schema ({
         required: true
       },
       to: {
-        type: Date,
+        type: Date
       },
       current: {
         type: Boolean,
@@ -108,7 +108,7 @@ const ProfileSchema = new Schema ({
     },
     instagram: {
       type: String
-    },
+    }
   },
   date: {
     type: Date,
