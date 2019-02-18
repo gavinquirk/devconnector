@@ -31,10 +31,12 @@ router.post('/register', (req, res) => {
 
   User.findOne({ email: req.body.email })
     .then(user => {
+      // If user already exists
       if (user) {
         errors.email = 'Email already exists'
         return res.status(400).json(errors);
       } else {
+        // If user doesn't exist
         // Grab gravatar url from user email
         const avatar = gravatar.url(req.body.email, {
           s: '200', // Size
@@ -42,6 +44,7 @@ router.post('/register', (req, res) => {
           d: 'mm' // Default -- placeholder picture
         });
 
+        // Create new User using submitted data
         const newUser = new User({
           name: req.body.name,
           email: req.body.email,
@@ -49,7 +52,7 @@ router.post('/register', (req, res) => {
           password: req.body.password
         });
 
-        // Generate salt
+        // Generate salt for password storage
         bcrypt.genSalt(10, (error, salt) => {
           bcrypt.hash(newUser.password, salt, (error, hash) => {
             if (error) throw error;
@@ -81,6 +84,7 @@ router.post('/login', (req, res) => {
   User.findOne({ email })
     .then(user => {
       //Check for user
+      // Respond with 404, error if user not found
       if (!user) {
         errors.email = 'User not found'
         return res.status(404).json(errors);
@@ -90,7 +94,7 @@ router.post('/login', (req, res) => {
       bcrypt.compare(password, user.password)
         .then(isMatch => {
           if (isMatch) {
-            // User Matched
+            // If password is a match
             const payload = { id: user.id, name: user.name, avatar: user.avatar } // Create JWT Payload
 
             // Sign Token
@@ -106,6 +110,7 @@ router.post('/login', (req, res) => {
               }
             );
           } else {
+            // Respond with 400, error if password incorrect
             errors.password = "Password is incorrect"
             return res.status(400).json(errors);
           }
