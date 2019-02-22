@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TextFieldGroup from '../Common/TextFieldGroup';
 import TextAreaFieldGroup from '../Common/TextAreaFieldGroup';
 import InputGroup from '../Common/InputGroup';
 import SelectListGroup from '../Common/SelectListGroup';
+import { createProfile } from '../../actions/profileActions';
 
 class CreateProfile extends Component {
   state = {
@@ -25,9 +27,32 @@ class CreateProfile extends Component {
     errors: {}
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   onSubmit = event => {
     event.preventDefault();
-    console.log('submit');
+
+    const profileData = {
+      handle: this.state.handle,
+      company: this.state.company,
+      website: this.state.website,
+      location: this.state.location,
+      status: this.state.status,
+      skills: this.state.skills,
+      githubusername: this.state.githubusername,
+      bio: this.state.bio,
+      twitter: this.state.twitter,
+      facebook: this.state.facebook,
+      linkedin: this.state.linkedin,
+      youtube: this.state.youtube,
+      instagram: this.state.instagram
+    };
+
+    this.props.createProfile(profileData, this.props.history);
   };
 
   onChange = event => {
@@ -152,7 +177,7 @@ class CreateProfile extends Component {
                   info="City or city & state"
                 />
                 <TextFieldGroup
-                  placeholder="Skills"
+                  placeholder="* Skills"
                   name="skills"
                   value={this.state.skills}
                   onChange={this.onChange}
@@ -177,8 +202,8 @@ class CreateProfile extends Component {
                 />
                 <div className="mb-3">
                   <button
+                    type="button"
                     onClick={event => {
-                      event.preventDefault();
                       this.setState(prevState => ({
                         displaySocialInputs: !prevState.displaySocialInputs
                       }));
@@ -205,8 +230,8 @@ class CreateProfile extends Component {
 }
 
 CreateProfile.propTypes = {
-  profile: PropTypes.object.isRequired
-  // errors: PropTypes.object.isRequired
+  profile: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -214,4 +239,7 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps)(CreateProfile);
+export default connect(
+  mapStateToProps,
+  { createProfile }
+)(withRouter(CreateProfile));
