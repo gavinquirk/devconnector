@@ -24,7 +24,7 @@ class Experience extends Component {
         </td>
         <td>
           <button
-            onClick={() => this.onDeleteClick(experience.id)}
+            onClick={() => this.onDeleteClick(experience._id)}
             className="btn btn-danger"
           >
             Delete

@@ -24,7 +24,7 @@ class Education extends Component {
         </td>
         <td>
           <button
-            onClick={() => this.onDeleteClick(education.id)}
+            onClick={() => this.onDeleteClick(education._id)}
             className="btn btn-danger"
           >
             Delete
