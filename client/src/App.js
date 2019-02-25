@@ -18,6 +18,7 @@ import Login from './components/Auth/Login';
 import Dashboard from './components/Dashboard/Dashboard';
 import CreateProfile from './components/CreateProfile/CreateProfile';
 import EditProfile from './components/EditProfile/EditProfile';
+import AddExperience from './components/AddCredentials/AddExperience';
 
 import './App.css';
 
@@ -47,27 +48,34 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Router>
-          <div className="App">
+          <div className='App'>
             <Navbar />
-            <Route exact path="/" component={Landing} />
-            <div className="container">
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
+            <Route exact path='/' component={Landing} />
+            <div className='container'>
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
               <Switch>
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                <PrivateRoute exact path='/dashboard' component={Dashboard} />
               </Switch>
               <Switch>
                 <PrivateRoute
                   exact
-                  path="/create-profile"
+                  path='/create-profile'
                   component={CreateProfile}
                 />
               </Switch>
               <Switch>
                 <PrivateRoute
                   exact
-                  path="/edit-profile"
+                  path='/edit-profile'
                   component={EditProfile}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path='/add-experience'
+                  component={AddExperience}
                 />
               </Switch>
             </div>
