@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import {
   GET_PROFILE,
+  GET_PROFILES,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_ERRORS,
@@ -102,6 +103,25 @@ export const deleteEducation = id => dispatch => {
       dispatch({
         type: GET_ERRORS,
         payload: error.response.data
+      });
+    });
+};
+
+// Get all profiles
+export const getProfiles = () => dispatch => {
+  dispatch(setProfileLoading());
+  axios
+    .get('/api/profile/all')
+    .then(response => {
+      dispatch({
+        type: GET_PROFILES,
+        payload: response.data
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: GET_PROFILES,
+        payload: null
       });
     });
 };
