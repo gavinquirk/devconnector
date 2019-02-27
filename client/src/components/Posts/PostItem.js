@@ -68,7 +68,7 @@ class PostItem extends Component {
                 </Link>
                 {post.user === auth.user.id ? (
                   <button
-                    onClick={this.onDeleteClick.bind(this, post._id)}
+                    onClick={() => this.onDeleteClick(post._id)}
                     type='button'
                     className='btn btn-danger mr-1'
                   >
